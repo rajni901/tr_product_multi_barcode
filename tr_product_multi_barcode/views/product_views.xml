@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add Multi Barcode tab to Product Template form -->
+    <record id="view_product_template_multi_barcode" model="ir.ui.view">
+        <field name="name">product.template.multi.barcode</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Additional Barcodes" name="multi_barcodes">
+                    <div class="o_field_widget mb-3">
+                        <a name="action_import_barcodes"
+                           type="action"
+                           class="btn btn-sm btn-secondary"
+                           context="{'default_product_tmpl_id': active_id}">
+                            &#8593; Import Barcodes (CSV)
+                        </a>
+                    </div>
+                    <field name="multi_barcode_ids"
+                           context="{'default_product_tmpl_id': active_id}">
+                        <list editable="bottom">
+                            <field name="product_id" column_invisible="True"/>
+                            <field name="barcode" required="1"/>
+                            <field name="note" placeholder="e.g. Supplier barcode, Old barcode"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add smart button to product form -->
+    <record id="view_product_template_barcode_button" model="ir.ui.view">
+        <field name="name">product.template.barcode.button</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(action_product_barcode)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-barcode"
+                        context="{'search_default_product_tmpl_id': active_id}">
+                    <field name="multi_barcode_count" widget="statinfo" string="Barcodes"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

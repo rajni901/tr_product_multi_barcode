@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Product Barcode List View -->
+    <record id="view_product_barcode_tree" model="ir.ui.view">
+        <field name="name">product.barcode.tree</field>
+        <field name="model">product.barcode</field>
+        <field name="arch" type="xml">
+            <list string="Barcodes">
+                <field name="product_id"/>
+                <field name="barcode"/>
+                <field name="note"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Product Barcode Search View -->
+    <record id="view_product_barcode_search" model="ir.ui.view">
+        <field name="name">product.barcode.search</field>
+        <field name="model">product.barcode</field>
+        <field name="arch" type="xml">
+            <search string="Search Barcodes">
+                <field name="barcode" string="Barcode" filter_domain="[('barcode','ilike',self)]"/>
+                <field name="product_id"/>
+                <field name="note"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_product_barcode" model="ir.actions.act_window">
+        <field name="name">Product Barcodes</field>
+        <field name="res_model">product.barcode</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_product_barcode_root"
+              name="Product Barcodes"
+              parent="stock.menu_stock_config_settings"
+              action="action_product_barcode"
+              sequence="20"/>
+
+</odoo>
