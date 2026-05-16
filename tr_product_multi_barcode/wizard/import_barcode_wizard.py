@@ -14,6 +14,23 @@ class ImportBarcodeWizard(models.TransientModel):
     csv_filename = fields.Char(string='Filename')
     result_message = fields.Text(string='Result', readonly=True)
 
+    def _find_product(self, product_ref):
+        if not product_ref:
+            return False
+        Product = self.env['product.template']
+        # Search by internal reference
+        product = Product.search([('default_code', '=', product_ref)], limit=1)
+        if not product:
+            # Search by exact name
+            product = Product.search([('name', '=', product_ref)], limit=1)
+        if not product:
+            # Search by name (case-insensitive)
+            product = Product.search([('name', 'ilike', product_ref)], limit=1)
+        if not product:
+            # Search by existing barcode
+            product = Product.search([('barcode', '=', product_ref)], limit=1)
+        return product
+
     def action_import(self):
         if not self.csv_file:
             raise UserError(_('Please upload a CSV file.'))
@@ -32,25 +49,21 @@ class ImportBarcodeWizard(models.TransientModel):
             if not barcode:
                 continue
 
-            product = self.env['product.product'].search(
-                [('default_code', '=', product_ref)], limit=1
-            ) if product_ref else self.env['product.product'].search(
-                [('barcode', '=', product_ref)], limit=1
-            )
+            product = self._find_product(product_ref)
 
             if not product:
-                errors.append(f'Row {i}: Product "{product_ref}" not found.')
+                errors.append(f'Row {i}: Product "{product_ref}" not found. Check the name matches exactly in Odoo.')
                 skipped += 1
                 continue
 
             existing = self.env['product.barcode'].search([('barcode', '=', barcode)], limit=1)
             if existing:
-                errors.append(f'Row {i}: Barcode "{barcode}" already exists.')
+                errors.append(f'Row {i}: Barcode "{barcode}" already exists on "{existing.product_tmpl_id.name}".')
                 skipped += 1
                 continue
 
             self.env['product.barcode'].create({
-                'product_id': product.id,
+                'product_tmpl_id': product.id,
                 'barcode': barcode,
                 'note': note,
             })

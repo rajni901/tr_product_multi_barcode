@@ -8,7 +8,7 @@
             <form string="Import Barcodes from CSV">
                 <div class="alert alert-info" role="alert">
                     <strong>CSV Format:</strong>
-                    Columns required: <code>Internal Reference</code>, <code>Barcode</code>, <code>Note</code> (optional)
+                    Columns: <code>Internal Reference</code> (or Product Name or Barcode), <code>Barcode</code>, <code>Note</code> (optional)
                 </div>
                 <group>
                     <field name="csv_file" filename="csv_filename" widget="binary"/>

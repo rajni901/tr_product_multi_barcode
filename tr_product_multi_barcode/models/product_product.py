@@ -9,14 +9,6 @@ class ProductProduct(models.Model):
         'product_id',
         string='Additional Barcodes',
     )
-    multi_barcode_count = fields.Integer(
-        compute='_compute_multi_barcode_count',
-        string='Barcode Count',
-    )
-
-    def _compute_multi_barcode_count(self):
-        for rec in self:
-            rec.multi_barcode_count = len(rec.multi_barcode_ids)
 
     @api.model
     def _search_by_multi_barcode(self, barcode):

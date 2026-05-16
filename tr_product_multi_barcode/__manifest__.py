@@ -23,8 +23,8 @@ Features:
     'data': [
         'security/ir.model.access.csv',
         'views/product_barcode_views.xml',
-        'views/product_views.xml',
         'wizard/import_barcode_wizard_views.xml',
+        'views/product_views.xml',
     ],
     'images': ['static/description/banner.png'],
     'installable': True,
