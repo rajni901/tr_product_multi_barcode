@@ -4,7 +4,7 @@
     'category': 'Inventory/Products',
     'summary': 'Assign multiple barcodes to a single product with duplicate validation and CSV import',
     'description': """
-Product Multi Barcode — by Technical Rajni
+Product Multi Barcode — by Vayu Sharma
 ==========================================
 Assign and manage multiple barcodes for a single product.
 
@@ -16,8 +16,8 @@ Features:
 - Print barcode labels
 - Fast, zero-configuration setup
     """,
-    'author': 'Technical Rajni',
-    'website': 'https://www.technicalrajni.com',
+    'author': 'Vayu Sharma',
+    'website': '',
     'license': 'OPL-1',
     'depends': ['product', 'stock', 'sale', 'purchase', 'account'],
     'data': [
